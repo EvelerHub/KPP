@@ -1,0 +1,5 @@
+<!ELEMENT datasheet (data)* >
+<!ELEMENT data (x, y)>
+<!ATTLIST data  date    CDATA  #IMPLIED >
+<!ELEMENT x  (#PCDATA)>
+<!ELEMENT y  (#PCDATA)>
