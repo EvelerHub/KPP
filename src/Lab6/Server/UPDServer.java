@@ -49,6 +49,7 @@ public class UPDServer {
                     } catch (IOException e) {
                         System.out.println("Ops! IOException during getting data");
                     }
+
                     log(inetAddress, port);
 
                     try {
@@ -85,13 +86,13 @@ public class UPDServer {
         datagramSocket.receive(datagramPacket);
         inetAddress = datagramPacket.getAddress();
         port = datagramPacket.getPort();
-        ActiveUsers users = new ActiveUsers();
+
         User user = new User(inetAddress, port);
 
-        if (users.isEmpty()) {
-            users.add(user);
-        } else if (!users.contains(user)) {
-            users.add(user);
+        if (activeUsers.isEmpty()) {
+            activeUsers.add(user);
+        } else if (!activeUsers.contains(user)) {
+            activeUsers.add(user);
         }
 
         buffer = clear(buffer);
@@ -99,7 +100,6 @@ public class UPDServer {
 
     private void sendUserData() throws IOException {
         byte[] buffer;
-
         for (int i = 0; i < activeUsers.size(); i++) {
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(bout);
@@ -107,9 +107,7 @@ public class UPDServer {
             buffer = bout.toByteArray();
             datagramPacket = new DatagramPacket(buffer, buffer.length, inetAddress, port);
             datagramSocket.send(datagramPacket);
-        }
-
-        buffer = "end".getBytes();
+        } buffer = "end".getBytes();
         datagramPacket = new DatagramPacket(buffer, 0, inetAddress, port);
         datagramSocket.send(datagramPacket);
     }

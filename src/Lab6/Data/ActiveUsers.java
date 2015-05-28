@@ -36,6 +36,10 @@ public class ActiveUsers implements Serializable {
 
     @Override
     public String toString() {
-        return "users=" + users + "\n";
+        String toString = "users:\n";
+        for (User user : users) {
+            toString = toString.concat(user.toString()+"\n");
+        }
+        return toString;
     }
 }
