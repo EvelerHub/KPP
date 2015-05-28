@@ -5,10 +5,12 @@ package tests;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        int a = '\u0004';
+    static void m(int[] i){
 
-        System.out.println(a);
+    }
+
+    public static void main(String[] args) {
+        m(new int[]{123});
     }
 
 }

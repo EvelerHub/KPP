@@ -15,7 +15,7 @@ import java.net.SocketException;
  * Created by Eveler on 28.05.2015.
  */
 public class UPDServer {
-    boolean isAlive = false;
+    boolean isAlive;
     private ActiveUsers activeUsers;
     private DatagramSocket datagramSocket;
     private DatagramPacket datagramPacket;
@@ -28,6 +28,7 @@ public class UPDServer {
         datagramSocket = new DatagramSocket(port);
         datagramPacket = null;
         inetAddress = null;
+        isAlive = false;
     }
 
     public void start(int bufferSize) {
@@ -116,6 +117,5 @@ public class UPDServer {
     private void log(InetAddress inetAddress, int port) {
         System.out.println("Request from " + inetAddress.getHostAddress() + " port:" + port);
     }
-
 
 }
