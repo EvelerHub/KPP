@@ -1,11 +1,9 @@
-package Lab6.Server;
+package Lab6.Ex1.Server;
 
-import Lab6.Data.ActiveUsers;
-import Lab6.Data.User;
+import Lab6.Ex1.Data.ActiveUsers;
+import Lab6.Ex1.Data.User;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -22,9 +20,9 @@ public class UPDServer {
     private InetAddress inetAddress;
     private int port;
 
-    public UPDServer(int port) throws SocketException {
+    public UPDServer(int port, ActiveUsers activeUsers) throws SocketException {
         this.port = port;
-        activeUsers = new ActiveUsers();
+        this.activeUsers = activeUsers;
         datagramSocket = new DatagramSocket(port);
         datagramPacket = null;
         inetAddress = null;
@@ -107,7 +105,8 @@ public class UPDServer {
             buffer = bout.toByteArray();
             datagramPacket = new DatagramPacket(buffer, buffer.length, inetAddress, port);
             datagramSocket.send(datagramPacket);
-        } buffer = "end".getBytes();
+        }
+        buffer = "end".getBytes();
         datagramPacket = new DatagramPacket(buffer, 0, inetAddress, port);
         datagramSocket.send(datagramPacket);
     }
@@ -116,4 +115,24 @@ public class UPDServer {
         System.out.println("Request from " + inetAddress.getHostAddress() + " port:" + port);
     }
 
+    public void stop() {
+        isAlive = false;
+        datagramSocket.close();
+    }
+
+    public ActiveUsers getActiveUsers() {
+        return activeUsers;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        serealize("Lab6Ex1.txt",activeUsers);
+    }
+
+    private static void serealize(String fileName, Object object) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+        objectOutputStream.writeObject(object);
+        objectOutputStream.close();
+    }
 }

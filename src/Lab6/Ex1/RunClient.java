@@ -1,6 +1,6 @@
-package Lab6;
+package Lab6.Ex1;
 
-import Lab6.Client.UDPClient;
+import Lab6.Ex1.Client.UDPClient;
 
 import java.io.IOException;
 

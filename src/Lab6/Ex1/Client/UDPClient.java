@@ -1,7 +1,7 @@
-package Lab6.Client;
+package Lab6.Ex1.Client;
 
-import Lab6.Data.ActiveUsers;
-import Lab6.Data.User;
+import Lab6.Ex1.Data.ActiveUsers;
+import Lab6.Ex1.Data.User;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
